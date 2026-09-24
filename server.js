@@ -5,12 +5,9 @@ require("dotenv").config();
 const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
-const userRoutes = require(
-  "./routes/userRoutes"
-);
-const errorHandler = require(
-  "./middleware/errorMiddleware"
-);
+const userRoutes = require("./routes/userRoutes");
+const errorHandler = require("./middleware/errorMiddleware");
+
 const app = express();
 
 const PORT = process.env.PORT || 5000;
@@ -19,7 +16,10 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://fitmax.snappytales.in",
+    ],
     credentials: true,
   })
 );
@@ -27,11 +27,11 @@ app.use(
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
-app.use(
-  "/api/users",
-  userRoutes
-);
+
+app.use("/api/users", userRoutes);
+
 app.use(errorHandler);
+
 app.get("/", (req, res) => {
   res.json({
     success: true,
