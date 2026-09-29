@@ -14,14 +14,14 @@ const router = express.Router();
 router.get("/", protect, async (req, res) => {
   try {
     const notifications = await Notification.find({
-      user: req.user.userId,
+      recipient: req.user.userId,
     })
       .sort({ createdAt: -1 })
       .limit(100);
 
     const unreadCount = await Notification.countDocuments({
-      user: req.user.userId,
-      isRead: false,
+      recipient: req.user.userId,
+      read: false,
     });
 
     return res.status(200).json({
@@ -51,16 +51,12 @@ router.patch("/:id/read", protect, async (req, res) => {
     const notification = await Notification.findOneAndUpdate(
       {
         _id: req.params.id,
-        user: req.user.userId,
+        recipient: req.user.userId,
       },
       {
-        $set: {
-          isRead: true,
-        },
+        $set: { read: true },
       },
-      {
-        new: true,
-      }
+      { new: true }
     );
 
     if (!notification) {
@@ -96,13 +92,11 @@ router.patch("/read-all", protect, async (req, res) => {
   try {
     const result = await Notification.updateMany(
       {
-        user: req.user.userId,
-        isRead: false,
+        recipient: req.user.userId,
+        read: false,
       },
       {
-        $set: {
-          isRead: true,
-        },
+        $set: { read: true },
       }
     );
 
@@ -132,7 +126,7 @@ router.delete("/:id", protect, async (req, res) => {
   try {
     const notification = await Notification.findOneAndDelete({
       _id: req.params.id,
-      user: req.user.userId,
+      recipient: req.user.userId,
     });
 
     if (!notification) {

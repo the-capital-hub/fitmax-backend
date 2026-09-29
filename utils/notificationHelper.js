@@ -8,19 +8,21 @@ async function createNotification({
   userId,
   title,
   message,
-  type = "system",
-  data = {},
+  type = "System",
+  link = "",
+  sender = null,
 }) {
   if (!userId || !title || !message) return null;
 
   try {
     return await Notification.create({
-      user: userId,
+      recipient: userId,
+      sender,
       title: String(title).trim(),
       message: String(message).trim(),
       type,
-      data,
-      isRead: false,
+      link,
+      read: false,
     });
   } catch (error) {
     console.error("Notification creation failed:", error.message);

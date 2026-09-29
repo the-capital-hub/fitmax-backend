@@ -12,11 +12,22 @@ const consultationSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
+      index: true,
     },
     careTeam: {
       type: String,
-      required: true,
+      default: "FitMax Care Team",
       trim: true,
+    },
+    title: {
+      type: String,
+      default: "Physiotherapy Consultation",
+      trim: true,
+    },
+    type: {
+      type: String,
+      enum: ["Video", "Phone", "In-person"],
+      default: "Video",
     },
     date: {
       type: String,
