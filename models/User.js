@@ -36,13 +36,23 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["member", "admin"],
-      default: "member",
+      enum: ["member", "patient", "physio", "admin"],
+      default: "patient",
     },
 
     isActive: {
       type: Boolean,
       default: true,
+    },
+
+    passwordResetToken: {
+      type: String,
+      default: null,
+    },
+
+    passwordResetExpires: {
+      type: Date,
+      default: null,
     },
   },
   {
