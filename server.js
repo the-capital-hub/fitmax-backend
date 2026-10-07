@@ -18,6 +18,7 @@ const consultationRoutes = require("./routes/consultationRoutes");
 const dashboardRoutes = require("./routes/dashboardRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+const adminAppointmentRoutes = require("./routes/adminAppointmentRoutes");
 
 // =========================================================
 // ERROR HANDLER
@@ -143,6 +144,11 @@ app.use(
 app.use(
   "/api/notifications",
   notificationRoutes,
+);
+
+app.use(
+  "/api/admin-appointments",
+  adminAppointmentRoutes,
 );
 
 // =========================================================
